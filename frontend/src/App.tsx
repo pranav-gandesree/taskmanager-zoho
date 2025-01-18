@@ -1,3 +1,4 @@
+import TaskList from "./components/TaskList"
 
 function App() {
 
@@ -6,6 +7,7 @@ function App() {
     <div className="text-red-500">
       hi from reuden
     </div>
+    <TaskList/>
     </>
   )
 }
