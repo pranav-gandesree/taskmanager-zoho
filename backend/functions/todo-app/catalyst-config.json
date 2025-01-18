@@ -1,6 +1,6 @@
 {
 	"deployment": {
-		"name": "todo-list",
+		"name": "todo-app",
 		"stack": "node20",
 		"type": "advancedio",
 		"env_variables": {}
