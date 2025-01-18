@@ -1,0 +1,10 @@
+{
+	"name": "todo-list",
+	"version": "1.0.0",
+	"main": "index.js",
+	"author": "pranav8267@gmail.com",
+	"dependencies": {
+		"express": "^4.21.2",
+		"zcatalyst-sdk-node": "latest"
+	}
+}
