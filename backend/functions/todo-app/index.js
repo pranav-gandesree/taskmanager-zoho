@@ -17,9 +17,11 @@ app.use(cors(
   {
     origin: "*",
     allowedHeaders: ["Content-Type", "Authorization"],
-    methods: ['GET', 'POST', 'DELETE', 'PUT']
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
   }
 ));
+
+app.options("*", cors());
 
 // middleware to initialize Catalyst SDK for every request
 app.use((req, res, next) => {

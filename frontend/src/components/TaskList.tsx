@@ -1,23 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { getTasks } from '../api/tasks';
 
-const TaskList: React.FC = () => {
-    const [tasks, setTasks] = useState([]);
+import React from "react";
+import { Container, Typography, Box } from "@mui/material";
+import TaskItem from "./TaskItem";
 
-    useEffect(() => {
-        getTasks().then(setTasks);
-        console.log(tasks)
-    }, []);
+interface Task {
+  id: bigint;
+  title: string;
+  description: string;
+  pending: boolean;
+}
 
+interface TaskListProps {
+  tasks: Task[] | undefined;
+  onDeleteTask: (id: bigint) => void;
+  onEditTask: (task: Task) => void;
+}
 
-    return (
-        <div>
-            <h1>Task List</h1>
-            <ul>
-               <li>hi</li>
-            </ul>
-        </div>
-    );
+const TaskList: React.FC<TaskListProps> = ({
+  tasks = [],
+  onDeleteTask,
+  onEditTask,
+}) => {
+  // Ensure tasks is always an array
+  const safeTasks = Array.isArray(tasks) ? tasks : [];
+
+  return (
+    <Container maxWidth="md" sx={{ py: 4 }}>
+     
+        <Typography
+          variant="h4"
+          component="h1"
+          color="primary.light"
+          sx={{ mb: 4 }}
+        >
+          My Tasks
+        </Typography>
+        {safeTasks.length === 0 ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="200px"
+          >
+            <Typography color="text.secondary">
+              No tasks found. Add some tasks to get started!
+            </Typography>
+          </Box>
+        ) : (
+          safeTasks.map((task) => (
+            <TaskItem
+              key={task.id.toString()} // Convert BigInt to string for the key
+              task={task}
+              onDelete={onDeleteTask}
+              onEdit={onEditTask}
+            />
+          ))
+        )}
+      {/* </Paper> */}
+    </Container>
+  );
 };
 
 export default TaskList;
