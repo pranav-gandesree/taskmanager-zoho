@@ -30,6 +30,10 @@ export const updateTask = async (task: APITask) => {
 };
 
 export const deleteTask = async (ROWID: bigint) => {
-  const response = await axios.delete(`${API_URL}/deleteTask/${ROWID}`);
+  const response = await axios.delete(`${API_URL}/deleteTask/${ROWID}`, {
+    headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+    }});
   return response.data;
 };

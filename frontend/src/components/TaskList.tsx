@@ -21,7 +21,6 @@ const TaskList: React.FC<TaskListProps> = ({
   onDeleteTask,
   onEditTask,
 }) => {
-  // Ensure tasks is always an array
   const safeTasks = Array.isArray(tasks) ? tasks : [];
 
   return (
@@ -56,7 +55,6 @@ const TaskList: React.FC<TaskListProps> = ({
             />
           ))
         )}
-      {/* </Paper> */}
     </Container>
   );
 };

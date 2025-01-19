@@ -15,7 +15,7 @@ app.use(express.json({
 
 app.use(cors(
   {
-    origin: "*",
+    origin: "http://localhost:5173",
     allowedHeaders: ["Content-Type", "Authorization"],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
   }
@@ -23,7 +23,20 @@ app.use(cors(
 
 app.options("*", cors());
 
-// middleware to initialize Catalyst SDK for every request
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  
+  if (req.method === 'OPTIONS') {
+      return res.sendStatus(200);
+  }
+  next();
+});
+
+
+
 app.use((req, res, next) => {
   const catalyst = catalystSDK.initialize(req);
   res.locals.catalyst = catalyst;

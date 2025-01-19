@@ -25,7 +25,6 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onEdit }) => {
       sx={{
         border: "1px solid grey",
         borderRadius: "8px",
-        // backgroundColor: task.pending ? "yellow" : "green",
       }}
     >
       <Box>

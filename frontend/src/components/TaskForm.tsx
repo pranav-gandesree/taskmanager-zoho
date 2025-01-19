@@ -6,8 +6,11 @@ import {
   Typography,
   TextField,
   Button,
-  FormControlLabel,
-  Switch,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 
 interface TaskFormProps {
@@ -18,11 +21,14 @@ const TaskForm: React.FC<TaskFormProps> = ({ onCreateTask }) => {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [pending, setPending] = useState(false);
+  const [pending, setPending] = useState(true);
 
-  const handleToggle = () => setPending(!pending);
+  const handleStatusChange = (event: SelectChangeEvent<"true" | "false">) => {
+    setPending(event.target.value === "true");
+  };
 
   const handleSubmit = () => {
+ 
     if (title.trim() === "" || description.trim() === "") {
       alert("Please fill in all fields.");
       return;
@@ -31,8 +37,10 @@ const TaskForm: React.FC<TaskFormProps> = ({ onCreateTask }) => {
     onCreateTask({ title, description, pending });
     setTitle("");
     setDescription("");
-    setPending(false);
+    setPending(true);
     setOpen(false);
+
+    window.location.reload();
   };
 
   const handleClose = () => {
@@ -79,27 +87,13 @@ const TaskForm: React.FC<TaskFormProps> = ({ onCreateTask }) => {
               onChange={(e) => setTitle(e.target.value)}
               InputProps={{
                 style: {
-                  color: "#3b82f6", 
-                  borderColor: "#3b82f6",
+                  color: "#3b82f6",
                 },
               }}
               InputLabelProps={{
-                style: { color: "#9BA49E" }, 
+                style: { color: "#9BA49E" },
               }}
-              className="mb-4 border-blue-500 focus:border-blue-500"
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#3b82f6",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "#2563eb", 
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#1d4ed8", 
-                  },
-                },
-              }}
+              className="mb-4 focus:border-blue-500"
             />
             <TextField
               label="Description"
@@ -111,39 +105,28 @@ const TaskForm: React.FC<TaskFormProps> = ({ onCreateTask }) => {
               onChange={(e) => setDescription(e.target.value)}
               InputProps={{
                 style: {
-                  color: "#3b82f6", 
+                  color: "#3b82f6",
                 },
               }}
               InputLabelProps={{
-                style: { color: "#9BA49E" }, 
+                style: { color: "#9BA49E" },
               }}
               className="mb-4"
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    borderColor: "#3b82f6",
-                  },
-                  "&:hover fieldset": {
-                    borderColor: "#2563eb",
-                  },
-                  "&.Mui-focused fieldset": {
-                    borderColor: "#1d4ed8",
-                  },
-                },
-              }}
+            
             />
+            <FormControl fullWidth className="mb-4">
+              <InputLabel style={{ color: "#9BA49E" }}>Status</InputLabel>
+              <Select
+                value={pending ? "true" : "false"}
+                onChange={handleStatusChange}
+                style={{ color: "#3b82f6" }}
+              >
+                <MenuItem value="true">Pending</MenuItem>
+                <MenuItem value="false">Completed</MenuItem>
+              </Select>
+            </FormControl>
           </div>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={pending}
-                onChange={handleToggle}
-                color="primary"
-              />
-            }
-            label="Pending"
-            className="mb-4 text-white"
-          />
+      
           <Box className="flex justify-end gap-4 mt-2">
             <Button
               onClick={handleClose}
@@ -162,6 +145,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ onCreateTask }) => {
               Create
             </Button>
           </Box>
+  
         </Box>
       </Modal>
     </>
