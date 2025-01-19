@@ -41,112 +41,157 @@ router.get("/getTasks", async(req, res)=>{
 
 
 
+// router.post("/addTask", async (req, res) => {
+//     try {
+//       const { title, description, pending } = req.body;
+//       console.log(req.body)
+  
+//       if (!title || !description || !pending) {
+//         return res.status(400).send({
+//           status: "failure",
+//           message: "title, description and pending field is required.",
+//         });
+//       }
+  
+//       const { catalyst } = res.locals;
+//       const table = catalyst.datastore().table("Tasks");
+  
+//       const { ROWID: id } = await table.insertRow({
+//          Title: title,
+//          Description: description,
+//          Pending: pending
+//          });
+  
+//       res.status(201).send({
+//         status: "success",
+//         data: {
+//           task: {
+//             id,
+//             title,
+//             description,
+//             pending
+//           },
+//         },
+//       });
+//     } catch (err) {
+//       console.error(err);
+//       res.status(500).send({
+//         status: "failure",
+//         message: "Unable to create task. Please try again.",
+//       });
+//     }
+//   });
+
+
 router.post("/addTask", async (req, res) => {
-    try {
-      const { title, description, pending } = req.body;
-      console.log(req.body)
-  
-      if (!title || !description || !pending) {
-        return res.status(400).send({
-          status: "failure",
-          message: "title, description and pending field is required.",
-        });
-      }
-  
-      const { catalyst } = res.locals;
-      const table = catalyst.datastore().table("Tasks");
-  
-      const { ROWID: id } = await table.insertRow({
-         Title: title,
-         Description: description,
-         Pending: pending
-         });
-  
-      res.status(201).send({
-        status: "success",
-        data: {
-          task: {
-            id,
-            title,
-            description,
-            pending
-          },
-        },
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send({
+  try {
+    const { title, description, pending } = req.body;
+    console.log(req.body);
+
+    // Change the validation to check for undefined/null
+    if (!title || !description || pending === undefined) {
+      return res.status(400).send({
         status: "failure",
-        message: "Unable to create task. Please try again.",
+        message: "title, description and pending field is required.",
       });
     }
-  });
 
+    const { catalyst } = res.locals;
+    const table = catalyst.datastore().table("Tasks");
+
+    const { ROWID: id } = await table.insertRow({
+      Title: title,
+      Description: description,
+      Pending: pending
+    });
+
+    res.status(201).send({
+      status: "success",
+      data: {
+        task: {
+          id,
+          title,
+          description,
+          pending
+        },
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      status: "failure",
+      message: "Unable to create task. Please try again.",
+    });
+  }
+});
   
 
-
-// Update an existing task
+  
 router.put("/updateTask/:ROWID", async (req, res) => {
-    try {
-      const { ROWID } = req.params;
-      const { description, title, pending} = req.body;
-  
-      if (!ROWID) {
-        return res.status(400).send({
-          status: "failure",
-          message: "Task ID (ROWID) is required.",
-        });
-      }
-  
-      const { catalyst } = res.locals;
-      const table = catalyst.datastore().table("Tasks");
+  try {
+    const { ROWID } = req.params;
+    const { description, title, pending } = req.body;
 
-      if (!title && !description && !pending) {
-        return res.status(400).send({
-          status: "failure",
-          message: "At least one field (title, description, or pending) must be provided to update.",
-        });
-      }
-  
-      const task = await table.getRow(ROWID);
-      if (!task) {
-        return res.status(404).send({
-          status: "failure",
-          message: "Task not found.",
-        });
-      }
-  
-
-      const updatedData = {
-        Title: title || task.Title, 
-        Description: description || task.Description,
-        Pending: pending || task.Pending,
-      };
-  
-     
-      await table.updateRow(ROWID, updatedData);
-  
-      res.status(200).send({
-        status: "success",
-        data: {
-          todoItem: {
-            id: ROWID,
-            title: updatedData.Title,
-            description: updatedData.Description,
-            pending: updatedData.Pending,
-          },
-        },
-      });
-    } catch (err) {
-      console.error(err);
-      res.status(500).send({
+    if (!ROWID) {
+      return res.status(400).send({
         status: "failure",
-        message: "Unable to update task. Please try again.",
+        message: "Task ID (ROWID) is required.",
       });
     }
-  });
-  
-  
+
+    const { catalyst } = res.locals;
+    const table = catalyst.datastore().table("Tasks");
+
+    if (!title && !description && pending === undefined) {
+      return res.status(400).send({
+        status: "failure",
+        message: "At least one field (title, description, or pending) must be provided to update.",
+      });
+    }
+
+    const task = await table.getRow(ROWID);
+    if (!task) {
+      return res.status(404).send({
+        status: "failure",
+        message: "Task not found.",
+      });
+    }
+
+    const updatedData = {
+      Title: title !== undefined ? title : task.Title,
+      Description: description !== undefined ? description : task.Description,
+      Pending: pending !== undefined ? pending : task.Pending,
+    };
+
+
+    if (!updatedData || typeof updatedData !== 'object') {
+      throw new Error('Invalid update data');
+    }
+
+    await table.updateRow({
+      ROWID: ROWID,
+      ...updatedData
+    });
+
+    res.status(200).send({
+      status: "success",
+      data: {
+        todoItem: {
+          id: ROWID,
+          title: updatedData.Title,
+          description: updatedData.Description,
+          pending: updatedData.Pending,
+        },
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      status: "failure",
+      message: "Unable to update task. Please try again.",
+    });
+  }
+});
 
 
 
