@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Typography, Button } from "@mui/material";
-// import { Delete } from "lucide-react";
+import { Box, Typography, Button, Chip } from "@mui/material";
 
 interface Task {
   id: bigint;
@@ -26,14 +25,16 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onEdit }) => {
       sx={{
         border: "1px solid grey",
         borderRadius: "8px",
-        backgroundColor: task.pending ? "yellow" : "green",
+        // backgroundColor: task.pending ? "yellow" : "green",
       }}
     >
       <Box>
         <Typography variant="h6">{task.title}</Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="#9BA49E">
           {task.description}
         </Typography>
+        <Chip label={task.pending? "pending": "completed"} color="primary" className="mt-3">
+        </Chip>
       </Box>
       <Box>
         <Button
@@ -46,11 +47,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete, onEdit }) => {
         </Button>
         <Button
           variant="contained"
-          color="secondary"
+          color="error"
           onClick={() => onDelete(task.id)}
         >
           Delete 
-          {/* <Delete/> */}
         </Button>
       </Box>
     </Box>

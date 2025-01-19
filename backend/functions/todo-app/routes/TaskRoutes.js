@@ -11,7 +11,7 @@ router.get("/getTasks", async(req, res)=>{
           `SELECT ROWID, Title, Description, Pending  FROM Tasks`
         );
 
-        console.log('Raw query result:', JSON.stringify(tasksQuery, null, 2));
+        // console.log('Raw query result:', JSON.stringify(tasksQuery, null, 2));
     
         const tasks = tasksQuery.map((row) => ({
             id: row.Tasks.ROWID,
@@ -21,7 +21,7 @@ router.get("/getTasks", async(req, res)=>{
           }));
           
 
-        console.log("mapped tasks is ", tasks)
+        // console.log("mapped tasks is ", tasks)
     
   
         res.status(200).send({
@@ -41,54 +41,11 @@ router.get("/getTasks", async(req, res)=>{
 
 
 
-// router.post("/addTask", async (req, res) => {
-//     try {
-//       const { title, description, pending } = req.body;
-//       console.log(req.body)
-  
-//       if (!title || !description || !pending) {
-//         return res.status(400).send({
-//           status: "failure",
-//           message: "title, description and pending field is required.",
-//         });
-//       }
-  
-//       const { catalyst } = res.locals;
-//       const table = catalyst.datastore().table("Tasks");
-  
-//       const { ROWID: id } = await table.insertRow({
-//          Title: title,
-//          Description: description,
-//          Pending: pending
-//          });
-  
-//       res.status(201).send({
-//         status: "success",
-//         data: {
-//           task: {
-//             id,
-//             title,
-//             description,
-//             pending
-//           },
-//         },
-//       });
-//     } catch (err) {
-//       console.error(err);
-//       res.status(500).send({
-//         status: "failure",
-//         message: "Unable to create task. Please try again.",
-//       });
-//     }
-//   });
-
-
 router.post("/addTask", async (req, res) => {
   try {
     const { title, description, pending } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
 
-    // Change the validation to check for undefined/null
     if (!title || !description || pending === undefined) {
       return res.status(400).send({
         status: "failure",

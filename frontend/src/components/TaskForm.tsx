@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   Modal,
@@ -40,16 +41,16 @@ const TaskForm: React.FC<TaskFormProps> = ({ onCreateTask }) => {
 
   return (
     <>
-    <div className="flex flex-row-reverse">
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => setOpen(true)}
-        className="bg-blue-500 text-white hover:bg-blue-600"
+      <div className="flex flex-row-reverse">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setOpen(true)}
+          className="bg-blue-500 text-white hover:bg-blue-600"
         >
-        Create Task
-      </Button>
-    </div>
+          Create Task
+        </Button>
+      </div>
       <Modal open={open} onClose={handleClose}>
         <Box
           className="bg-[#242424] rounded-lg shadow-lg p-6"
@@ -63,27 +64,75 @@ const TaskForm: React.FC<TaskFormProps> = ({ onCreateTask }) => {
             p: 4,
           }}
         >
-          <Typography variant="h6" className="mb-4">
-            Create a New Task
-          </Typography>
-          <TextField
-            label="Title"
-            variant="outlined"
-            fullWidth
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="mb-4 text-blue-600"
-          />
-          <TextField
-            label="Description"
-            variant="outlined"
-            fullWidth
-            multiline
-            rows={3}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="mb-4 text-blue-600"
-          />
+          <div className="flex flex-col gap-4">
+            <Typography
+              variant="h6"
+              className="mb-4 text-white font-semibold"
+            >
+              Create a New Task
+            </Typography>
+            <TextField
+              label="Title"
+              variant="outlined"
+              fullWidth
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              InputProps={{
+                style: {
+                  color: "#3b82f6", 
+                  borderColor: "#3b82f6",
+                },
+              }}
+              InputLabelProps={{
+                style: { color: "#9BA49E" }, 
+              }}
+              className="mb-4 border-blue-500 focus:border-blue-500"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#3b82f6",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#2563eb", 
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#1d4ed8", 
+                  },
+                },
+              }}
+            />
+            <TextField
+              label="Description"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              InputProps={{
+                style: {
+                  color: "#3b82f6", 
+                },
+              }}
+              InputLabelProps={{
+                style: { color: "#9BA49E" }, 
+              }}
+              className="mb-4"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: "#3b82f6",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: "#2563eb",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: "#1d4ed8",
+                  },
+                },
+              }}
+            />
+          </div>
           <FormControlLabel
             control={
               <Switch
@@ -93,14 +142,14 @@ const TaskForm: React.FC<TaskFormProps> = ({ onCreateTask }) => {
               />
             }
             label="Pending"
-            className="mb-4"
+            className="mb-4 text-white"
           />
-          <Box className="flex justify-end">
+          <Box className="flex justify-end gap-4 mt-2">
             <Button
               onClick={handleClose}
               variant="outlined"
               color="secondary"
-              className="mr-2"
+              className="text-white border-white hover:bg-gray-700"
             >
               Cancel
             </Button>

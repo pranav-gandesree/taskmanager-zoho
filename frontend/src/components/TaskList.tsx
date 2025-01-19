@@ -49,7 +49,7 @@ const TaskList: React.FC<TaskListProps> = ({
         ) : (
           safeTasks.map((task) => (
             <TaskItem
-              key={task.id.toString()} // Convert BigInt to string for the key
+              key={task.id.toString()}
               task={task}
               onDelete={onDeleteTask}
               onEdit={onEditTask}
