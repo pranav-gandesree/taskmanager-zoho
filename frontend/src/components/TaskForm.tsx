@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 
 interface TaskFormProps {
-  onCreateTask: (task: { title: string; description: string; pending: boolean }) => void;
+  onCreateTask: (task: {title: string; description: string; pending: boolean }) => void;
 }
 
 const TaskForm: React.FC<TaskFormProps> = ({ onCreateTask }) => {
@@ -39,8 +39,6 @@ const TaskForm: React.FC<TaskFormProps> = ({ onCreateTask }) => {
     setDescription("");
     setPending(true);
     setOpen(false);
-
-    window.location.reload();
   };
 
   const handleClose = () => {

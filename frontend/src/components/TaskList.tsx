@@ -48,7 +48,7 @@ const TaskList: React.FC<TaskListProps> = ({
         ) : (
           safeTasks.map((task) => (
             <TaskItem
-              key={task.id.toString()}
+              key={String(task.id)} 
               task={task}
               onDelete={onDeleteTask}
               onEdit={onEditTask}

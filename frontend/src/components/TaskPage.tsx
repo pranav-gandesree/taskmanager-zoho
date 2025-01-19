@@ -32,9 +32,21 @@ function TaskPage() {
 
   const handleCreateTask = async (newTask: { title: string; description: string; pending: boolean }) => {
     try {
-      const createdTask = await createTask(newTask);
-      setTasks((prevTasks) => [...prevTasks, createdTask]);
+      const response = await createTask(newTask);
+      const createdTask = response.data;
+
+      // console.log("created task is ", newTask)
+
+      // setTasks((prevTasks) => [...prevTasks, createdTask]);
+      setTasks(prevTasks => [...prevTasks, {
+        id: createdTask.id,
+        title: createdTask.title,
+        description: createdTask.description,
+        pending: createdTask.pending
+      }]);
+
       showAlert("Task created successfully!", "success");
+      window.location.reload();
     } catch (error) {
       console.error("error creating task", error);
       showAlert("failed to create task", "error");
@@ -74,6 +86,8 @@ function TaskPage() {
   const updateTaskHandler = async (updatedTask: Task) => {
     try {
       await updateTask(updatedTask);
+
+      
       setTasks(tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)));
       showAlert("Task updated successfully!", "success");
     } catch (error) {

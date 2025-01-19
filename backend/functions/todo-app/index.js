@@ -47,11 +47,6 @@ app.use((req, res, next) => {
 app.use("/tasks", TaskRoute)
 
 
-app.listen(4000, async () => {
-  console.log(`Server is running on port 4000`);
-});
-
-
 
 
 module.exports = app;
