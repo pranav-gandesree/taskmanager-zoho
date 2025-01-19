@@ -9,7 +9,6 @@ export default defineConfig({
       '/server/todo-app': {
         target: 'https://taskmanager-60036587353.development.catalystserverless.in',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/server\/todo-app/, '/server/todo-app'),
         secure: false,
       },
     },

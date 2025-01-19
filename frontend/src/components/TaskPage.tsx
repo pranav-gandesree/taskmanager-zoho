@@ -36,8 +36,8 @@ function TaskPage() {
       setTasks((prevTasks) => [...prevTasks, createdTask]);
       showAlert("Task created successfully!", "success");
     } catch (error) {
-      console.error("Error creating task:", error);
-      showAlert("Failed to create task. Please try again.", "error");
+      console.error("error creating task", error);
+      showAlert("failed to create task", "error");
     }
   };
 
@@ -48,8 +48,8 @@ function TaskPage() {
       const response = await getTasks();
       setTasks(response.data.tasks);
     } catch (error) {
-      setError("Failed to fetch tasks");
-      console.error("Error fetching tasks:", error);
+      setError("failed to fetch tasks");
+      console.error("error fetching tasks", error);
     } finally {
       setIsLoading(false);
     }
@@ -61,14 +61,14 @@ function TaskPage() {
       setTasks(tasks.filter((task) => task.id !== taskId));
       showAlert("Task deleted successfully!", "success");
     } catch (error) {
-      console.error("Error deleting task:", error);
-      showAlert("Failed to delete task. Please try again.", "error");
+      console.error("error deleting task", error);
+      showAlert("failed to delete task", "error");
     }
   };
 
   const handleEditTask = (task: Task) => {
     setTaskToEdit(task);
-    setEditModalOpen(true); // Open the edit modal
+    setEditModalOpen(true); 
   };
 
   const updateTaskHandler = async (updatedTask: Task) => {
@@ -77,8 +77,8 @@ function TaskPage() {
       setTasks(tasks.map((task) => (task.id === updatedTask.id ? updatedTask : task)));
       showAlert("Task updated successfully!", "success");
     } catch (error) {
-      console.error("Error updating task:", error);
-      showAlert("Failed to update task. Please try again.", "error");
+      console.error("E]error updating task:", error);
+      showAlert("Failed to update task", "error");
     }
   };
 

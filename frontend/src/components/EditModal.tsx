@@ -21,7 +21,6 @@ interface EditModalProps {
 const EditModal = ({ open, onClose, task, onUpdate }: EditModalProps) => {
   const [updatedTask, setUpdatedTask] = useState<Task | null>(null);
 
-  // Synchronize state with the task prop whenever it changes
   useEffect(() => {
     setUpdatedTask(task);
   }, [task]);
