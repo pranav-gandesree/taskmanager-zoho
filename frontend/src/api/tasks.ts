@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL
 
-// const API_URL = 'http://localhost:3000/server/todo-app/tasks';
+// const API_URL = 'http://localhost:3000/server/todo-app';
 
 
 export const getTasks = async () =>{
@@ -22,7 +22,11 @@ export const updateTask = async (task: { id: bigint ; title: string; description
 };
 
 export const deleteTask = async (ROWID: bigint) => {
-    const response = await axios.delete(`${API_URL}/tasks/deleteTask/${ROWID}`);
+    const response = await axios.delete(`${API_URL}/tasks/deleteTask/${ROWID}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
     return response.data;
 };
 
