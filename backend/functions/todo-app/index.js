@@ -17,7 +17,7 @@ app.use(express.json({
 //enable cors only for local testing
 
 // const corsOptions = {
-//   origin: ['https://taskmanager-zoho.vercel.app', 'http://localhost:5173'], 
+//   origin: ['https://taskmanager-zoho.vercel.app', 'http://localhost:5173', 'http://localhost:3000'], 
 //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 //   allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
 //   credentials: true,
