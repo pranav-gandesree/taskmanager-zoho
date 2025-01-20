@@ -1,4 +1,5 @@
 const express = require("express");
+const { updateTaskSchema, addTaskSchema } = require("../types/tasks");
 const router = express.Router();
 
 
@@ -20,9 +21,7 @@ router.get("/getTasks", async(req, res)=>{
             pending: row.Tasks.Pending
           }));
           
-
         // console.log("mapped tasks is ", tasks)
-    
   
         res.status(200).send({
           status: "success",
@@ -43,7 +42,8 @@ router.get("/getTasks", async(req, res)=>{
 
 router.post("/addTask", async (req, res) => {
   try {
-    const { title, description, pending } = req.body;
+    const parsedData = addTaskSchema.parse(req.body); // validate input
+    const { title, description, pending } = parsedData;
     // console.log(req.body);
 
     if (!title || !description || pending === undefined) {
@@ -87,7 +87,8 @@ router.post("/addTask", async (req, res) => {
 router.put("/updateTask/:ROWID", async (req, res) => {
   try {
     const { ROWID } = req.params;
-    const { description, title, pending } = req.body;
+    const parsedData = updateTaskSchema.parse(req.body); // validate body input
+    const { title, description, pending } = parsedData;
 
     if (!ROWID) {
       return res.status(400).send({

@@ -5,12 +5,5 @@
     ],
     "ignore": [],
     "source": "functions"
-  },
-  "cors": {
-        "enabled": true,
-        "origins": ["http://localhost:5173"],
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        "headers": ["Content-Type", "Authorization"],
-        "credentials": true
-    }
+  }
 }

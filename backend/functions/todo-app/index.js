@@ -14,28 +14,25 @@ app.use(express.json({
 }));
 
 
-const corsOptions = {
-  origin: "*",
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  optionsSuccessStatus: 200
-};
+//enable cors only for local testing
 
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: ['https://taskmanager-zoho.vercel.app', 'http://localhost:5173'], 
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With', 'Accept'],
+//   credentials: true,
+//   optionsSuccessStatus: 200
+// };
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-   res.header('Access-Control-Allow-Credentials', 'true');
-  
-  if (req.method === 'OPTIONS') {
-      return res.sendStatus(200);
-  }
-  next();
-});
+// app.use(cors(corsOptions));
 
+// app.options('*', (req, res) => {
+//   res.setHeader('Access-Control-Allow-Origin', 'https://taskmanager-zoho.vercel.app');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+//   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//   res.setHeader('Access-Control-Allow-Credentials', 'true');
+//   res.sendStatus(204);
+// });
 
 
 app.use((req, res, next) => {
@@ -45,8 +42,5 @@ app.use((req, res, next) => {
 });
 
 app.use("/tasks", TaskRoute)
-
-
-
 
 module.exports = app;
